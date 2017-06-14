@@ -1,13 +1,10 @@
 <?php
-// php -c /etc/php/7.0/fpm/php.ini /home/admin/ovh/snapshot.php
-
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 use Ovh\Api;
 use Symfony\Component\Yaml\Yaml;
 
 $config = Yaml::parse(file_get_contents('snapshot.yml'));
-//var_dump($config);
 
 $ovh = new Api($config['applicationKey'], $config['applicationSecret'], 'ovh-eu', $config['consumerKey']);
 
