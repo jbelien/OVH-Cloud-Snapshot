@@ -1,3 +1,6 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/jbelien/OVH-Cloud-Snapshot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/jbelien/OVH-Cloud-Snapshot/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/jbelien/OVH-Cloud-Snapshot/badges/build.png?b=master)](https://scrutinizer-ci.com/g/jbelien/OVH-Cloud-Snapshot/build-status/master)
+
 # OVH Cloud Automated Snapshot
 
 ## Requirements
