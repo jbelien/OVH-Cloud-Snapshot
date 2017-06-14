@@ -1,0 +1,15 @@
+{
+  "name": "jbelien/ovh-cloud-snapshot",
+  "description": "OVH Cloud Automated Snapshot (via OVH API)",
+  "type": "project",
+  "license": "GPL-3.0",
+  "authors": [
+      {
+          "name": "Jonathan Beliën"
+      }
+  ],
+  "require": {
+      "ovh/ovh": "^2.0",
+      "symfony/yaml": "^3.2"
+  }
+}
