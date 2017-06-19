@@ -4,7 +4,7 @@ require __DIR__.'/vendor/autoload.php';
 use Ovh\Api;
 use Symfony\Component\Yaml\Yaml;
 
-$config = Yaml::parse(file_get_contents('snapshot.yml'));
+$config = Yaml::parse(file_get_contents(__DIR__.'/snapshot.yml'));
 
 $ovh = new Api($config['applicationKey'], $config['applicationSecret'], 'ovh-eu', $config['consumerKey']);
 
