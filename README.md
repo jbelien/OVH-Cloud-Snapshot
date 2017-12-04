@@ -31,6 +31,8 @@ applicationKey: <ovh_application_key>
 applicationSecret: <ovh_application_secret>
 consumerKey: <ovh_consumer_key>
 
+duration: <date-interval>
+
 projects:
   - id: "<project-1-id>"
     instances:
@@ -48,6 +50,15 @@ projects:
       ...
   ...
 ```
+
+#### Configure `duration`
+
+To determine after how many days/weeks/months/... you want snapshots to be delete, use `duration` option.  
+This option uses PHP `DateInterval` format : <http://php.net/manual/en/dateinterval.construct.php>
+
+The format starts with the letter P, for "period." Each duration period is represented by an integer value followed by a period designator. If the duration contains time elements, that portion of the specification is preceded by the letter T.
+
+Here are some simple examples. Two days is `P2D`. Two seconds is `PT2S`. Six years and five minutes is `P6YT5M`.
 
 ## Run
 
