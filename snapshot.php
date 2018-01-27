@@ -34,16 +34,16 @@ foreach ($config['projects'] as $p) {
 
     foreach ($p['instances'] as $instance) {
         $snapshot = $ovh->post('/cloud/project/'.$p['id'].'/instance/'.$instance['id'].'/snapshot', [
-      'snapshotName' => $instance['name'].' ('.date('Y-m-d H:i:s').')',
-    ]);
+            'snapshotName' => $instance['name'].' ('.date('Y-m-d H:i:s').')',
+        ]);
         echo 'INSTANCE: '.$instance['name'].PHP_EOL;
         print_r($snapshot);
     }
 
     foreach ($p['volumes'] as $volume) {
         $snapshot = $ovh->post('/cloud/project/'.$p['id'].'/volume/'.$volume['id'].'/snapshot', [
-      'name' => $volume['name'].' ('.date('Y-m-d H:i:s').')',
-    ]);
+            'name' => $volume['name'].' ('.date('Y-m-d H:i:s').')',
+        ]);
         echo 'VOLUME: '.$volume['name'].PHP_EOL;
         print_r($snapshot);
     }
