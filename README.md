@@ -1,3 +1,7 @@
+[![Latest Stable Version](https://poser.pugx.org/jbelien/ovh-cloud-snapshot/v/stable)](https://packagist.org/packages/jbelien/ovh-cloud-snapshot)
+[![Total Downloads](https://poser.pugx.org/jbelien/ovh-cloud-snapshot/downloads)](https://packagist.org/packages/jbelien/ovh-cloud-snapshot)
+[![Monthly Downloads](https://poser.pugx.org/jbelien/ovh-cloud-snapshot/d/monthly.png)](https://packagist.org/packages/jbelien/ovh-cloud-snapshot)
+
 # OVH Cloud Automated Snapshot
 
 ## Requirements
