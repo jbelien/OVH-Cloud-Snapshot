@@ -39,7 +39,7 @@ foreach ($config['projects'] as $p) {
                 $count++;
             }
         }
-        
+
         echo sprintf('%d deleted snapshot(s)', $count).PHP_EOL;
     }
 
