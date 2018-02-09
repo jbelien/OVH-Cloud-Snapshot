@@ -14,13 +14,13 @@ foreach ($config['projects'] as $p) {
     echo 'PROJECT: '.$p['id'].PHP_EOL;
 
     if (isset($config['duration']) && !empty($config['duration'])) {
-        $list = $ovh->get('/cloud/project/'.$p['id'].'/snapshot');
-
         $time = new DateTime();
         $time->sub(new DateInterval($config['duration']));
         echo 'Delete snapshots older than '.$time->format('Y-m-d H:i:s').PHP_EOL;
 
         $count = 0;
+
+        $list = $ovh->get('/cloud/project/'.$p['id'].'/snapshot');
         foreach ($list as $snapshot) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
             if ($snapshot_time < $time) {
@@ -29,6 +29,17 @@ foreach ($config['projects'] as $p) {
                 $count++;
             }
         }
+
+        $list = $ovh->get('/cloud/project/'.$p['id'].'/volume/snapshot');
+        foreach ($list as $snapshot) {
+            $snapshot_time = new DateTime($snapshot['creationDate']);
+            if ($snapshot_time < $time) {
+                $ovh->delete('/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id']);
+                echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+                $count++;
+            }
+        }
+        
         echo sprintf('%d deleted snapshot(s)', $count).PHP_EOL;
     }
 
