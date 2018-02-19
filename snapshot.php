@@ -2,8 +2,8 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Ovh\Api;
 use Symfony\Component\Yaml\Yaml;
@@ -30,7 +30,7 @@ foreach ($config['projects'] as $p) {
 
         if ($dryrun !== true) {
             $log->debug('PROJECT: {project} - Delete snapshots older than '.$time->format('Y-m-d H:i:s'), [
-                'project' => $p['id']
+                'project' => $p['id'],
             ]);
         }
 
@@ -43,9 +43,9 @@ foreach ($config['projects'] as $p) {
                 if ($dryrun !== true) {
                     $delete = $ovh->delete('/cloud/project/'.$p['id'].'/snapshot/'.$snapshot['id']);
                     $log->debug('PROJECT: {project} - Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')', [
-                        'project' => $p['id'],
+                        'project'  => $p['id'],
                         'snapshot' => $snapshot,
-                        'delete' => $delete
+                        'delete'   => $delete,
                     ]);
                 }
 
@@ -62,9 +62,9 @@ foreach ($config['projects'] as $p) {
                 if ($dryrun !== true) {
                     $delete = $ovh->delete('/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id']);
                     $log->debug('PROJECT: {project} - Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')', [
-                        'project' => $p['id'],
+                        'project'  => $p['id'],
                         'snapshot' => $snapshot,
-                        'delete' => $delete
+                        'delete'   => $delete,
                     ]);
                 }
 
@@ -87,9 +87,9 @@ foreach ($config['projects'] as $p) {
             print_r($snapshot);
 
             $log->debug('PROJECT: {project} - Create snapshot instance "'.$instance['name'].'"', [
-                'project' => $p['id'],
+                'project'  => $p['id'],
                 'instance' => $instance,
-                'snapshot' => $snapshot
+                'snapshot' => $snapshot,
             ]);
         }
     }
@@ -104,9 +104,9 @@ foreach ($config['projects'] as $p) {
             print_r($snapshot);
 
             $log->debug('PROJECT: {project} - Create snapshot volume "'.$volume['name'].'"', [
-                'project' => $p['id'],
-                'volume' => $volume,
-                'snapshot' => $snapshot
+                'project'  => $p['id'],
+                'volume'   => $volume,
+                'snapshot' => $snapshot,
             ]);
         }
     }
