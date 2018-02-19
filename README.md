@@ -63,7 +63,11 @@ Here are some simple examples. Two days is `P2D`. Two seconds is `PT2S`. Six yea
 
 ## Run
 
-`php snapshot.php`
+    php snapshot.php
+
+Dry-run mode (simulates the query) :
+
+    php snapshot.php --dry-run
 
 ## Crontab
 
