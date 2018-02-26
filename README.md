@@ -21,12 +21,12 @@ composer create-project jbelien/ovh-cloud-snapshot
 
 Create credentials by clicking [here](https://api.ovh.com/createToken/index.cgi?POST=/cloud/project/*/instance/*/snapshot&POST=/cloud/project/*/volume/*/snapshot&GET=/cloud/project/*/snapshot&GET=/cloud/project/*/volume/snapshot&DELETE=/cloud/project/*/snapshot/*&DELETE=/cloud/project/*/volume/snapshot/*) !
 
-- **POST:** /cloud/project/\*/instance/\*/snapshot
-- **POST:** /cloud/project/\*/volume/\*/snapshot
-- **GET:** /cloud/project/\*/snapshot
-- **GET:** /cloud/project/\*/volume/snapshot
-- **DELETE:** /cloud/project/\*/snapshot/\*
-- **DELETE:** /cloud/project/\*/volume/snapshot/\*
+- POST: `/cloud/project/*/instance/*/snapshot`
+- POST: `/cloud/project/*/volume/*/snapshot`
+- GET: `/cloud/project/*/snapshot`
+- GET: `/cloud/project/*/volume/snapshot`
+- DELETE: `/cloud/project/*/snapshot/*`
+- DELETE: `/cloud/project/*/volume/snapshot/*`
 
 ### Second step
 
