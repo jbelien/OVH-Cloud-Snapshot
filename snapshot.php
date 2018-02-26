@@ -2,10 +2,10 @@
 
 require __DIR__.'/vendor/autoload.php';
 
+use GuzzleHttp\Exception\ServerException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
-use GuzzleHttp\Exception\ServerException;
 use Ovh\Api;
 use Symfony\Component\Yaml\Yaml;
 
