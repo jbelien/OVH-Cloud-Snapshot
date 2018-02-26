@@ -12,7 +12,7 @@ $options = getopt('', ['dry-run']);
 $dryrun = isset($options['dry-run']);
 
 $log = new Logger('snapshot');
-$log->pushHandler(new StreamHandler('snapshot.log', Logger::DEBUG));
+$log->pushHandler(new StreamHandler(__DIR__.'/snapshot.log', Logger::DEBUG));
 $log->pushProcessor(new PsrLogMessageProcessor());
 
 $config = Yaml::parse(file_get_contents(__DIR__.'/snapshot.yml'));
