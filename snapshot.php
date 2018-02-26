@@ -43,11 +43,14 @@ foreach ($config['projects'] as $p) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
             if ($snapshot_time < $time) {
                 if ($dryrun !== true) {
-                    $delete = $ovh->delete('/cloud/project/'.$p['id'].'/snapshot/'.$snapshot['id']);
+                    $url = '/cloud/project/'.$p['id'].'/snapshot/'.$snapshot['id'];
+                    $delete = $ovh->delete($url);
+
                     $log->debug('PROJECT: {project} - Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')', [
                         'project'  => $p['id'],
                         'snapshot' => $snapshot,
                         'delete'   => $delete,
+                        'url'      => $url,
                     ]);
                 }
 
@@ -62,11 +65,14 @@ foreach ($config['projects'] as $p) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
             if ($snapshot_time < $time) {
                 if ($dryrun !== true) {
-                    $delete = $ovh->delete('/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id']);
+                    $url = '/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id'];
+                    $delete = $ovh->delete($url);
+
                     $log->debug('PROJECT: {project} - Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')', [
                         'project'  => $p['id'],
                         'snapshot' => $snapshot,
                         'delete'   => $delete,
+                        'url'      => $url,
                     ]);
                 }
 
@@ -89,15 +95,16 @@ foreach ($config['projects'] as $p) {
         echo 'INSTANCE: '.$instance['name'].PHP_EOL;
 
         if ($dryrun !== true) {
-            $snapshot = $ovh->post('/cloud/project/'.$p['id'].'/instance/'.$instance['id'].'/snapshot', [
+            $url = '/cloud/project/'.$p['id'].'/instance/'.$instance['id'].'/snapshot';
+            $snapshot = $ovh->post($url, [
                 'snapshotName' => $instance['name'].' ('.date('Y-m-d H:i:s').')',
             ]);
-            print_r($snapshot);
 
             $log->debug('PROJECT: {project} - Create snapshot instance "'.$instance['name'].'"', [
                 'project'  => $p['id'],
                 'instance' => $instance,
                 'snapshot' => $snapshot,
+                'url'      => $url,
             ]);
         }
     }
@@ -112,15 +119,16 @@ foreach ($config['projects'] as $p) {
         echo 'VOLUME: '.$volume['name'].PHP_EOL;
 
         if ($dryrun !== true) {
-            $snapshot = $ovh->post('/cloud/project/'.$p['id'].'/volume/'.$volume['id'].'/snapshot', [
+            $url = '/cloud/project/'.$p['id'].'/volume/'.$volume['id'].'/snapshot';
+            $snapshot = $ovh->post($url, [
                 'name' => $volume['name'].' ('.date('Y-m-d H:i:s').')',
             ]);
-            print_r($snapshot);
 
             $log->debug('PROJECT: {project} - Create snapshot volume "'.$volume['name'].'"', [
                 'project'  => $p['id'],
                 'volume'   => $volume,
                 'snapshot' => $snapshot,
+                'url'      => $url,
             ]);
         }
     }
