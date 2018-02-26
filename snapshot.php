@@ -22,6 +22,8 @@ $ovh = new Api($config['applicationKey'], $config['applicationSecret'], 'ovh-eu'
 foreach ($config['projects'] as $p) {
     echo '--------------------------------------------------'.PHP_EOL;
     echo 'PROJECT: '.$p['id'].PHP_EOL;
+    echo count($p['instances']).' INSTANCE(S)'.PHP_EOL;
+    echo count($p['volumes']).' VOLUME(S)'.PHP_EOL;
 
     if (isset($config['duration']) && !empty($config['duration'])) {
         $time = new DateTime();
@@ -77,6 +79,12 @@ foreach ($config['projects'] as $p) {
         echo sprintf('%d deleted snapshot(s)', $count).PHP_EOL;
     }
 
+    if ($dryrun !== true) {
+        $log->debug('PROJECT: {project} - Create snapshot of '.count($p['instances']).' instance(s)', [
+            'project' => $p['id'],
+        ]);
+    }
+
     foreach ($p['instances'] as $instance) {
         echo 'INSTANCE: '.$instance['name'].PHP_EOL;
 
@@ -92,6 +100,12 @@ foreach ($config['projects'] as $p) {
                 'snapshot' => $snapshot,
             ]);
         }
+    }
+
+    if ($dryrun !== true) {
+        $log->debug('PROJECT: {project} - Create snapshot of '.count($p['volumes']).' volume(s)', [
+            'project' => $p['id'],
+        ]);
     }
 
     foreach ($p['volumes'] as $volume) {
