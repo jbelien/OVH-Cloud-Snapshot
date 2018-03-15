@@ -23,8 +23,12 @@ $ovh = new Api($config['applicationKey'], $config['applicationSecret'], 'ovh-eu'
 foreach ($config['projects'] as $p) {
     echo '--------------------------------------------------'.PHP_EOL;
     echo 'PROJECT: '.$p['id'].PHP_EOL;
-    echo count($p['instances']).' INSTANCE(S)'.PHP_EOL;
-    echo count($p['volumes']).' VOLUME(S)'.PHP_EOL;
+    if (isset($p['instances']) && is_array($p['instances'])) {
+        echo count($p['instances']).' INSTANCE(S)'.PHP_EOL;
+    }
+    if (isset($p['volumes']) && is_array($p['volumes'])) {
+        echo count($p['volumes']).' VOLUME(S)'.PHP_EOL;
+    }
 
     if (isset($config['duration']) && !empty($config['duration'])) {
         $time = new DateTime();
@@ -106,70 +110,74 @@ foreach ($config['projects'] as $p) {
         echo sprintf('%d deleted snapshot(s)', $count).PHP_EOL;
     }
 
-    if ($dryrun !== true) {
-        $log->debug('PROJECT: {project} - Created snapshot of '.count($p['instances']).' instance(s)', [
-            'project' => $p['id'],
-        ]);
-    }
-
-    foreach ($p['instances'] as $instance) {
-        echo 'INSTANCE: '.$instance['name'].PHP_EOL;
-
+    if (isset($p['instances']) && is_array($p['instances'])) {
         if ($dryrun !== true) {
-            try {
-                $url = '/cloud/project/'.$p['id'].'/instance/'.$instance['id'].'/snapshot';
-                $snapshot = $ovh->post($url, [
-                    'snapshotName' => $instance['name'].' ('.date('Y-m-d H:i:s').')',
-                ]);
+            $log->debug('PROJECT: {project} - Created snapshot of '.count($p['instances']).' instance(s)', [
+                'project' => $p['id'],
+            ]);
+        }
 
-                $log->debug('PROJECT: {project} - Created snapshot instance "'.$instance['name'].'"', [
-                    'project'  => $p['id'],
-                    'instance' => $instance,
-                    'snapshot' => $snapshot,
-                    'url'      => $url,
-                ]);
-            } catch (ServerException $exception) {
-                $log->error($exception->getMessage(), [
-                    'project'   => $p['id'],
-                    'instance'  => $instance,
-                    'snapshot'  => $snapshot,
-                    'url'       => $url,
-                    'exception' => $exception,
-                ]);
+        foreach ($p['instances'] as $instance) {
+            echo 'INSTANCE: '.$instance['name'].PHP_EOL;
+
+            if ($dryrun !== true) {
+                try {
+                    $url = '/cloud/project/'.$p['id'].'/instance/'.$instance['id'].'/snapshot';
+                    $snapshot = $ovh->post($url, [
+                        'snapshotName' => $instance['name'].' ('.date('Y-m-d H:i:s').')',
+                    ]);
+
+                    $log->debug('PROJECT: {project} - Created snapshot instance "'.$instance['name'].'"', [
+                        'project'  => $p['id'],
+                        'instance' => $instance,
+                        'snapshot' => $snapshot,
+                        'url'      => $url,
+                    ]);
+                } catch (ServerException $exception) {
+                    $log->error($exception->getMessage(), [
+                        'project'   => $p['id'],
+                        'instance'  => $instance,
+                        'snapshot'  => $snapshot,
+                        'url'       => $url,
+                        'exception' => $exception,
+                    ]);
+                }
             }
         }
     }
 
-    if ($dryrun !== true) {
-        $log->debug('PROJECT: {project} - Create snapshot of '.count($p['volumes']).' volume(s)', [
-            'project' => $p['id'],
-        ]);
-    }
-
-    foreach ($p['volumes'] as $volume) {
-        echo 'VOLUME: '.$volume['name'].PHP_EOL;
-
+    if (isset($p['volumes']) && is_array($p['volumes'])) {
         if ($dryrun !== true) {
-            try {
-                $url = '/cloud/project/'.$p['id'].'/volume/'.$volume['id'].'/snapshot';
-                $snapshot = $ovh->post($url, [
-                    'name' => $volume['name'].' ('.date('Y-m-d H:i:s').')',
-                ]);
+            $log->debug('PROJECT: {project} - Create snapshot of '.count($p['volumes']).' volume(s)', [
+                'project' => $p['id'],
+            ]);
+        }
 
-                $log->debug('PROJECT: {project} - Create snapshot volume "'.$volume['name'].'"', [
-                    'project'  => $p['id'],
-                    'volume'   => $volume,
-                    'snapshot' => $snapshot,
-                    'url'      => $url,
-                ]);
-            } catch (ServerException $exception) {
-                $log->error($exception->getMessage(), [
-                    'project'   => $p['id'],
-                    'instance'  => $instance,
-                    'snapshot'  => $snapshot,
-                    'url'       => $url,
-                    'exception' => $exception,
-                ]);
+        foreach ($p['volumes'] as $volume) {
+            echo 'VOLUME: '.$volume['name'].PHP_EOL;
+
+            if ($dryrun !== true) {
+                try {
+                    $url = '/cloud/project/'.$p['id'].'/volume/'.$volume['id'].'/snapshot';
+                    $snapshot = $ovh->post($url, [
+                        'name' => $volume['name'].' ('.date('Y-m-d H:i:s').')',
+                    ]);
+
+                    $log->debug('PROJECT: {project} - Create snapshot volume "'.$volume['name'].'"', [
+                        'project'  => $p['id'],
+                        'volume'   => $volume,
+                        'snapshot' => $snapshot,
+                        'url'      => $url,
+                    ]);
+                } catch (ServerException $exception) {
+                    $log->error($exception->getMessage(), [
+                        'project'   => $p['id'],
+                        'instance'  => $instance,
+                        'snapshot'  => $snapshot,
+                        'url'       => $url,
+                        'exception' => $exception,
+                    ]);
+                }
             }
         }
     }
