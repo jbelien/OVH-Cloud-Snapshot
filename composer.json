@@ -9,8 +9,8 @@
       }
   ],
   "require": {
-      "ovh/ovh": "^2.0",
-      "symfony/yaml": "^4.0",
-      "monolog/monolog": "^1.23"
+      "ovh/ovh": "2.0.1",
+      "symfony/yaml": "4.0.8",
+      "monolog/monolog": "1.23.0"
   }
 }
