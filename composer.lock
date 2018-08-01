@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25d6d937bbd4746f2034a82f4f1dcef1",
+    "content-hash": "956a591383f3bbf923bd9042a84d9b4c",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -454,7 +454,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
