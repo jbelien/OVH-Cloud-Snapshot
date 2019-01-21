@@ -11,7 +11,7 @@
 
 ## Installation
 
-```
+```shell
 composer create-project jbelien/ovh-cloud-snapshot
 ```
 
@@ -32,7 +32,7 @@ Create credentials by clicking [here](https://api.ovh.com/createToken/index.cgi?
 
 Create `snapshot.yml` in root directory with your credentials and the list of your instances/volumes :
 
-```
+```yaml
 ---
 applicationKey: <ovh_application_key>
 applicationSecret: <ovh_application_secret>
@@ -50,11 +50,18 @@ projects:
       - &myvolume
         id: "<volume-id>"
         name: "My Volume"
+    protected:
+      instances:
+        - "<instance-id>"
+      volumes:
   - id: "<project-2-id>"
     instances:
       ...
     volumes:
       ...
+    protected:
+      instances:
+      volumes:
   ...
 ```
 
@@ -66,6 +73,8 @@ This option uses PHP `DateInterval` format : <http://php.net/manual/en/dateinter
 The format starts with the letter P, for "period." Each duration period is represented by an integer value followed by a period designator. If the duration contains time elements, that portion of the specification is preceded by the letter T.
 
 Here are some simple examples. Two days is `P2D`. Two seconds is `PT2S`. Six years and five minutes is `P6YT5M`.
+
+You can protected snapshots from deletion but setting its id in `protected.instances` or `protected.volumes`.
 
 ## Run
 

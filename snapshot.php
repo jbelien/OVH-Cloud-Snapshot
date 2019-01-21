@@ -46,8 +46,12 @@ foreach ($config['projects'] as $p) {
         $list = $ovh->get('/cloud/project/'.$p['id'].'/snapshot');
         foreach ($list as $snapshot) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
-            if ($snapshot_time < $time) {
-                if ($dryrun !== true) {
+
+            if ($snapshot_time < $time && $dryrun !== true) {
+                if (isset($p['protected'], $p['protected']['instances']) && in_array($snapshot['id'], $p['protected']['instances'])) {
+                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')';
+                    echo ' - Skipped (protected) !'.PHP_EOL;
+                } else {
                     echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
 
                     try {
@@ -60,6 +64,8 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
+
+                        $count++;
                     } catch (RequestException $exception) {
                         $log->debug($exception->getMessage(), [
                             'project'   => $p['id'],
@@ -72,16 +78,18 @@ foreach ($config['projects'] as $p) {
                         echo $exception->getMessage().PHP_EOL;
                     }
                 }
-
-                $count++;
             }
         }
 
         $list = $ovh->get('/cloud/project/'.$p['id'].'/volume/snapshot');
         foreach ($list as $snapshot) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
-            if ($snapshot_time < $time) {
-                if ($dryrun !== true) {
+
+            if ($snapshot_time < $time && $dryrun !== true) {
+                if (isset($p['protected'], $p['protected']['volumes']) && in_array($snapshot['id'], $p['protected']['volumes'])) {
+                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')';
+                    echo ' - Skipped (protected) !'.PHP_EOL;
+                } else {
                     echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
 
                     try {
@@ -94,6 +102,8 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
+
+                        $count++;
                     } catch (RequestException $exception) {
                         $log->error($exception->getMessage(), [
                             'project'   => $p['id'],
@@ -102,12 +112,10 @@ foreach ($config['projects'] as $p) {
                             'url'       => $url,
                             'exception' => $exception,
                         ]);
+
+                        echo $exception->getMessage().PHP_EOL;
                     }
-
-                    echo $exception->getMessage().PHP_EOL;
                 }
-
-                $count++;
             }
         }
 
