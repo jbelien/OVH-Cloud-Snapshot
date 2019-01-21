@@ -58,7 +58,7 @@ foreach ($config['projects'] as $p) {
                             'url'      => $url,
                         ]);
                     } catch (Exception $exception) {
-                        $log->error($exception->getMessage(), [
+                        $log->error('ERROR: '.$exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
                             'delete'    => $delete ?? null,
@@ -90,7 +90,7 @@ foreach ($config['projects'] as $p) {
                             'url'      => $url,
                         ]);
                     } catch (Exception $exception) {
-                        $log->error($exception->getMessage(), [
+                        $log->error('ERROR: '.$exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
                             'delete'    => $delete ?? null,
@@ -133,7 +133,7 @@ foreach ($config['projects'] as $p) {
                         'url'      => $url,
                     ]);
                 } catch (Exception $exception) {
-                    $log->error($exception->getMessage(), [
+                    $log->error('ERROR: '.$exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
                         'snapshot'  => $snapshot ?? null,
@@ -169,7 +169,7 @@ foreach ($config['projects'] as $p) {
                         'url'      => $url,
                     ]);
                 } catch (Exception $exception) {
-                    $log->error($exception->getMessage(), [
+                    $log->error('ERROR: '.$exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
                         'snapshot'  => $snapshot ?? null,
