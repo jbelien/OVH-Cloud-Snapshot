@@ -2,6 +2,7 @@
 
 require __DIR__.'/vendor/autoload.php';
 
+use GuzzleHttp\Exception\RequestException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -47,6 +48,8 @@ foreach ($config['projects'] as $p) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
             if ($snapshot_time < $time) {
                 if ($dryrun !== true) {
+                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+
                     try {
                         $url = '/cloud/project/'.$p['id'].'/snapshot/'.$snapshot['id'];
                         $delete = $ovh->delete($url);
@@ -57,18 +60,18 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
-                    } catch (Exception $exception) {
-                        $log->error('ERROR: '.$exception->getMessage(), [
+                    } catch (RequestException $exception) {
+                        $log->debug($exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
                             'delete'    => $delete ?? null,
                             'url'       => $url,
                             'exception' => $exception,
                         ]);
+
+                        echo $exception->getMessage().PHP_EOL;
                     }
                 }
-
-                echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
 
                 $count++;
             }
@@ -79,6 +82,8 @@ foreach ($config['projects'] as $p) {
             $snapshot_time = new DateTime($snapshot['creationDate']);
             if ($snapshot_time < $time) {
                 if ($dryrun !== true) {
+                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+
                     try {
                         $url = '/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id'];
                         $delete = $ovh->delete($url);
@@ -89,8 +94,8 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
-                    } catch (Exception $exception) {
-                        $log->error('ERROR: '.$exception->getMessage(), [
+                    } catch (RequestException $exception) {
+                        $log->error($exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
                             'delete'    => $delete ?? null,
@@ -98,9 +103,9 @@ foreach ($config['projects'] as $p) {
                             'exception' => $exception,
                         ]);
                     }
-                }
 
-                echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+                    echo $exception->getMessage().PHP_EOL;
+                }
 
                 $count++;
             }
@@ -132,8 +137,8 @@ foreach ($config['projects'] as $p) {
                         'snapshot' => $snapshot,
                         'url'      => $url,
                     ]);
-                } catch (Exception $exception) {
-                    $log->error('ERROR: '.$exception->getMessage(), [
+                } catch (RequestException $exception) {
+                    $log->error($exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
                         'snapshot'  => $snapshot ?? null,
@@ -168,8 +173,8 @@ foreach ($config['projects'] as $p) {
                         'snapshot' => $snapshot,
                         'url'      => $url,
                     ]);
-                } catch (Exception $exception) {
-                    $log->error('ERROR: '.$exception->getMessage(), [
+                } catch (RequestException $exception) {
+                    $log->error($exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
                         'snapshot'  => $snapshot ?? null,
