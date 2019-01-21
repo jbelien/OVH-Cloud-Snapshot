@@ -1,3 +1,4 @@
+.vscode/
 vendor/
 snapshot.yml
 snapshot.log
