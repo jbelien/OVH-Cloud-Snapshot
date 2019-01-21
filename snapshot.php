@@ -21,19 +21,19 @@ $config = Yaml::parse(file_get_contents(__DIR__.'/snapshot.yml'));
 $ovh = new Api($config['applicationKey'], $config['applicationSecret'], 'ovh-eu', $config['consumerKey']);
 
 foreach ($config['projects'] as $p) {
-    echo '--------------------------------------------------'.PHP_EOL;
-    echo 'PROJECT: '.$p['id'].PHP_EOL;
+    echo "\033[36m--------------------------------------------------\033[0m".PHP_EOL;
+    echo sprintf("\033[36mPROJECT: %s\033[0m", $p['id']).PHP_EOL;
     if (isset($p['instances']) && is_array($p['instances'])) {
-        echo count($p['instances']).' INSTANCE(S)'.PHP_EOL;
+        echo sprintf("\033[36m%d INSTANCE(S)\033[0m", count($p['instances'])).PHP_EOL;
     }
     if (isset($p['volumes']) && is_array($p['volumes'])) {
-        echo count($p['volumes']).' VOLUME(S)'.PHP_EOL;
+        echo sprintf("\033[36m%d VOLUME(S)\033[0m", count($p['volumes'])).PHP_EOL;
     }
 
     if (isset($config['duration']) && !empty($config['duration'])) {
         $time = new DateTime();
         $time->sub(new DateInterval($config['duration']));
-        echo 'Delete snapshots older than '.$time->format('Y-m-d H:i:s').PHP_EOL;
+        echo sprintf("\033[33mDelete snapshots older than %s\033[0m", $time->format('Y-m-d H:i:s')).PHP_EOL;
 
         if ($dryrun !== true) {
             $log->debug('PROJECT: {project} - Delete snapshots older than '.$time->format('Y-m-d H:i:s'), [
@@ -49,10 +49,10 @@ foreach ($config['projects'] as $p) {
 
             if ($snapshot_time < $time && $dryrun !== true) {
                 if (isset($p['protected'], $p['protected']['instances']) && in_array($snapshot['id'], $p['protected']['instances'])) {
-                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')';
-                    echo ' - Skipped (protected) !'.PHP_EOL;
+                    echo sprintf("\033[37mDelete snapshot \"%s\" (%s)\033[0m", $snapshot['name'], $snapshot_time->format('Y-m-d H:i:s'));
+                    echo sprintf("\033[37m - Skipped (protected) !\033[0m").PHP_EOL;
                 } else {
-                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+                    echo sprintf("\033[32mDelete snapshot \"%s\" (%s)\033[0m", $snapshot['name'], $snapshot_time->format('Y-m-d H:i:s')).PHP_EOL;
 
                     try {
                         $url = '/cloud/project/'.$p['id'].'/snapshot/'.$snapshot['id'];
@@ -75,7 +75,7 @@ foreach ($config['projects'] as $p) {
                             'exception' => $exception,
                         ]);
 
-                        echo $exception->getMessage().PHP_EOL;
+                        echo sprintf("\033[31m%s\033[0m", $exception->getMessage()).PHP_EOL;
                     }
                 }
             }
@@ -87,10 +87,10 @@ foreach ($config['projects'] as $p) {
 
             if ($snapshot_time < $time && $dryrun !== true) {
                 if (isset($p['protected'], $p['protected']['volumes']) && in_array($snapshot['id'], $p['protected']['volumes'])) {
-                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')';
-                    echo ' - Skipped (protected) !'.PHP_EOL;
+                    echo sprintf("\033[37mDelete snapshot \"%s\" (%s)\033[0m", $snapshot['name'], $snapshot_time->format('Y-m-d H:i:s'));
+                    echo sprintf("\033[37m - Skipped (protected) !\033[0m").PHP_EOL;
                 } else {
-                    echo 'Delete snapshot "'.$snapshot['name'].'" ('.$snapshot_time->format('Y-m-d H:i:s').')'.PHP_EOL;
+                    echo sprintf("\033[32mDelete snapshot \"%s\" (%s)\033[0m", $snapshot['name'], $snapshot_time->format('Y-m-d H:i:s')).PHP_EOL;
 
                     try {
                         $url = '/cloud/project/'.$p['id'].'/volume/snapshot/'.$snapshot['id'];
@@ -113,13 +113,13 @@ foreach ($config['projects'] as $p) {
                             'exception' => $exception,
                         ]);
 
-                        echo $exception->getMessage().PHP_EOL;
+                        echo sprintf("\033[31m%s\033[0m", $exception->getMessage()).PHP_EOL;
                     }
                 }
             }
         }
 
-        echo sprintf('%d deleted snapshot(s)', $count).PHP_EOL;
+        echo sprintf("\033[32m%d deleted snapshot(s)\033[0m", $count).PHP_EOL;
     }
 
     if (isset($p['instances']) && is_array($p['instances'])) {
@@ -130,7 +130,7 @@ foreach ($config['projects'] as $p) {
         }
 
         foreach ($p['instances'] as $instance) {
-            echo 'INSTANCE: '.$instance['name'].PHP_EOL;
+            echo sprintf("\033[32mINSTANCE: %s\033[0m", $instance['name']).PHP_EOL;
 
             if ($dryrun !== true) {
                 try {
@@ -153,6 +153,8 @@ foreach ($config['projects'] as $p) {
                         'url'       => $url,
                         'exception' => $exception,
                     ]);
+
+                    echo sprintf("\033[31m%s\033[0m", $exception->getMessage()).PHP_EOL;
                 }
             }
         }
@@ -166,7 +168,7 @@ foreach ($config['projects'] as $p) {
         }
 
         foreach ($p['volumes'] as $volume) {
-            echo 'VOLUME: '.$volume['name'].PHP_EOL;
+            echo sprintf("\033[VOLUME: %s\033[0m", $volume['name']).PHP_EOL;
 
             if ($dryrun !== true) {
                 try {
@@ -189,6 +191,8 @@ foreach ($config['projects'] as $p) {
                         'url'       => $url,
                         'exception' => $exception,
                     ]);
+
+                    echo sprintf("\033[31m%s\033[0m", $exception->getMessage()).PHP_EOL;
                 }
             }
         }
