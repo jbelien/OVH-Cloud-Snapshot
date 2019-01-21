@@ -2,7 +2,6 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use GuzzleHttp\Exception\ServerException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -58,11 +57,11 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
-                    } catch (ServerException $exception) {
+                    } catch (Exception $exception) {
                         $log->error($exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
-                            'delete'    => $delete,
+                            'delete'    => $delete ?? null,
                             'url'       => $url,
                             'exception' => $exception,
                         ]);
@@ -90,11 +89,11 @@ foreach ($config['projects'] as $p) {
                             'delete'   => $delete,
                             'url'      => $url,
                         ]);
-                    } catch (ServerException $exception) {
+                    } catch (Exception $exception) {
                         $log->error($exception->getMessage(), [
                             'project'   => $p['id'],
                             'snapshot'  => $snapshot,
-                            'delete'    => $delete,
+                            'delete'    => $delete ?? null,
                             'url'       => $url,
                             'exception' => $exception,
                         ]);
@@ -133,11 +132,11 @@ foreach ($config['projects'] as $p) {
                         'snapshot' => $snapshot,
                         'url'      => $url,
                     ]);
-                } catch (ServerException $exception) {
+                } catch (Exception $exception) {
                     $log->error($exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
-                        'snapshot'  => $snapshot,
+                        'snapshot'  => $snapshot ?? null,
                         'url'       => $url,
                         'exception' => $exception,
                     ]);
@@ -169,11 +168,11 @@ foreach ($config['projects'] as $p) {
                         'snapshot' => $snapshot,
                         'url'      => $url,
                     ]);
-                } catch (ServerException $exception) {
+                } catch (Exception $exception) {
                     $log->error($exception->getMessage(), [
                         'project'   => $p['id'],
                         'instance'  => $instance,
-                        'snapshot'  => $snapshot,
+                        'snapshot'  => $snapshot ?? null,
                         'url'       => $url,
                         'exception' => $exception,
                     ]);
