@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 use App\Snapshot;
 
@@ -23,9 +23,9 @@ return function (Snapshot $app) : void {
             false
         );
         $type = intval($type);
-    } else if (count($snapshotsInstance) > 0) {
+    } elseif (count($snapshotsInstance) > 0) {
         $type = 0;
-    } else if (count($snapshotsVolume) > 0) {
+    } elseif (count($snapshotsVolume) > 0) {
         $type = 1;
     }
 

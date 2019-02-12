@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App;
 
@@ -13,8 +13,6 @@ use Composer\Composer;
 use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Script\Event;
-use ErrorException;
-use Exception;
 use Ovh\Api;
 use Symfony\Component\Yaml\Yaml;
 
@@ -46,11 +44,11 @@ class Snapshot
         $composerFile = Factory::getComposerFile();
 
         $this->projectRoot = realpath(dirname($composerFile)) ?? '';
-        $this->projectRoot = rtrim($this->projectRoot, '/\\') . '/';
+        $this->projectRoot = rtrim($this->projectRoot, '/\\').'/';
 
-        $this->appSource = realpath(__DIR__) . '/';
+        $this->appSource = realpath(__DIR__).'/';
 
-        $this->config = Yaml::parse(file_get_contents($this->projectRoot . 'config/snapshot.yml'));
+        $this->config = Yaml::parse(file_get_contents($this->projectRoot.'config/snapshot.yml'));
 
         $this->ovh = new Api($this->config['applicationKey'], $this->config['applicationSecret'], 'ovh-eu', $this->config['consumerKey']);
     }
@@ -77,7 +75,7 @@ class Snapshot
         }
     }
 
-    public static function clean (Event $event) : void
+    public static function clean(Event $event) : void
     {
         $app = new self($event->getIO(), $event->getComposer());
 
@@ -90,7 +88,7 @@ class Snapshot
         }
     }
 
-    public static function snapshot (Event $event) : void
+    public static function snapshot(Event $event) : void
     {
         $app = new self($event->getIO(), $event->getComposer());
 
