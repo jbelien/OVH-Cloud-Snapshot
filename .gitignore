@@ -1,4 +1,6 @@
 .vscode/
+config/*
+!config/.gitkeep
+logs/*
+!logs/.gitkeep
 vendor/
-snapshot.yml
-snapshot.log

@@ -30,7 +30,7 @@ Create credentials by clicking [here](https://api.ovh.com/createToken/index.cgi?
 
 ### Second step
 
-Create `snapshot.yml` in root directory with your credentials and the list of your instances/volumes :
+Create `config/snapshot.yml` with your credentials and the list of your instances/volumes :
 
 ```yaml
 ---
@@ -78,11 +78,29 @@ You can protected snapshots from deletion but setting its id in `protected.insta
 
 ## Run
 
-    php snapshot.php
+### Get list of all snapshots (in configured projects)
 
-Dry-run mode (simulates the query) :
+```shell
+composer run lookup
+```
 
-    php snapshot.php --dry-run
+### Create and/or Delete snapshot in **interactive** mode
+
+```shell
+composer run interactive
+```
+
+### Create and clean snapshots (based on configuration)
+
+```shell
+composer start
+```
+
+If you want to simulate the process, use `dry-run` mode. The process will run normally but the snapshots will not be created or deleted.
+
+```shell
+composer start -- --dry-run
+```
 
 ## Crontab
 

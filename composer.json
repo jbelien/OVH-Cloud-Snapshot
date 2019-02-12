@@ -1,16 +1,35 @@
 {
-  "name": "jbelien/ovh-cloud-snapshot",
-  "description": "OVH Cloud Automated Snapshot (via OVH API)",
-  "type": "project",
-  "license": "GPL-3.0-or-later",
-  "authors": [
-      {
-          "name": "Jonathan Beliën"
-      }
-  ],
-  "require": {
-      "ovh/ovh": "2.0.1",
-      "symfony/yaml": "4.2.2",
-      "monolog/monolog": "1.24.0"
-  }
+    "name": "jbelien/ovh-cloud-snapshot",
+    "type": "project",
+    "description": "OVH Cloud Automated Snapshot (via OVH API)",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Jonathan Beliën"
+        }
+    ],
+    "require": {
+        "composer/composer": "^1.8",
+        "monolog/monolog": "^1.24",
+        "ovh/ovh": "^2.0",
+        "symfony/yaml": "^4.2"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": [
+            "@snapshot",
+            "@clean"
+        ],
+        "clean": "App\\Snapshot::clean",
+        "interactive": "App\\Snapshot::interactive",
+        "lookup": "App\\Snapshot::lookup",
+        "snapshot": "App\\Snapshot::snapshot"
+    }
 }
