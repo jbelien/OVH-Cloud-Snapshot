@@ -11,6 +11,6 @@
   "require": {
       "ovh/ovh": "2.0.1",
       "symfony/yaml": "5.0.0",
-      "monolog/monolog": "2.0.0"
+      "monolog/monolog": "2.0.1"
   }
 }
