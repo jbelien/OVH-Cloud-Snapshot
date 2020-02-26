@@ -74,7 +74,7 @@ The format starts with the letter P, for "period." Each duration period is repre
 
 Here are some simple examples. Two days is `P2D`. Two seconds is `PT2S`. Six years and five minutes is `P6YT5M`.
 
-You can protected snapshots from deletion but setting its id in `protected.instances` or `protected.volumes`.
+You can protect snapshots from deletion by setting its id in `protected.instances` or `protected.volumes`.
 
 ## Run
 
