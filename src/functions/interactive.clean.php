@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Snapshot;
 
-return function (Snapshot $app) : void {
+return function (Snapshot $app): void {
     $p = $app->io->select(
         'Project:',
         array_column($app->config['projects'], 'id'),

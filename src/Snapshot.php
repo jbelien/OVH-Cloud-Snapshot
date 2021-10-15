@@ -58,47 +58,47 @@ class Snapshot
         );
     }
 
-    public static function lookup(Event $event) : void
+    public static function lookup(Event $event): void
     {
-        (require('functions/lookup.php'))($event);
+        (require 'functions/lookup.php')($event);
     }
 
-    public static function interactive(Event $event) : void
+    public static function interactive(Event $event): void
     {
         $app = new self($event->getIO(), $event->getComposer());
 
         $snapshot = $app->io->askConfirmation('<question>Do you want to create new snapshots (y/n) ?</question>', false);
 
         if ($snapshot === true) {
-            (require('functions/interactive.create.php'))($app);
+            (require 'functions/interactive.create.php')($app);
         }
 
         $clean = $app->io->askConfirmation('<question>Do you want to delete snapshots (y/n) ?</question>', false);
 
         if ($clean === true) {
-            (require('functions/interactive.clean.php'))($app);
+            (require 'functions/interactive.clean.php')($app);
         }
     }
 
-    public static function clean(Event $event) : void
+    public static function clean(Event $event): void
     {
         $app = new self($event->getIO(), $event->getComposer());
 
         $dryRun = in_array('--dry-run', $event->getArguments());
 
         if (isset($app->config['duration'])) {
-            (require('functions/clean.php'))($app, $dryRun);
+            (require 'functions/clean.php')($app, $dryRun);
         } else {
             $app->io->write('<warning>Duration not configured ! Automatic cleaning skipped !</warning>');
         }
     }
 
-    public static function snapshot(Event $event) : void
+    public static function snapshot(Event $event): void
     {
         $app = new self($event->getIO(), $event->getComposer());
 
         $dryRun = in_array('--dry-run', $event->getArguments());
 
-        (require('functions/snapshot.php'))($app, $dryRun);
+        (require 'functions/snapshot.php')($app, $dryRun);
     }
 }
