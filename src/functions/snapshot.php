@@ -7,7 +7,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 
-return function (Snapshot $app, bool $dryRun) : void {
+return function (Snapshot $app, bool $dryRun): void {
     $log = new Logger('snapshot');
     $log->pushHandler(new StreamHandler($app->projectRoot.'logs/'.date('Ym').'.log', Logger::DEBUG));
     $log->pushProcessor(new PsrLogMessageProcessor());

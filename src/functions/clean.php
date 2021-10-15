@@ -7,7 +7,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 
-return function (Snapshot $app, bool $dryRun) : void {
+return function (Snapshot $app, bool $dryRun): void {
     $time = new DateTime();
     $time->sub(new DateInterval($app->config['duration']));
 
