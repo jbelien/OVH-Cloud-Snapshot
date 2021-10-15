@@ -9,7 +9,6 @@ inputs:
   consumerKey:
     description: 'OVH API Consumer Key'
     required: true
-outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
