@@ -1,0 +1,19 @@
+name: 'OVH Cloud Snapshot'
+inputs:
+  applicationKey:
+    description: 'OVH API Application Key'
+    required: true
+  applicationSecret:
+    description: 'OVH API Application Secret'
+    required: true
+  consumerKey:
+    description: 'OVH API Consumer Key'
+    required: true
+outputs:
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.applicationKey }}
+    - ${{ inputs.applicationSecret }}
+    - ${{ inputs.consumerKey }}
