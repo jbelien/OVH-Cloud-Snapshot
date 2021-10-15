@@ -1,0 +1,15 @@
+on:
+  workflow_call:
+  # schedule:
+  #   - cron:  '0 1 * * *'
+
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./ # Uses an action in the root directory
+        with:
+          applicationKey: ${{ secrets.GEO6_APPLICATION_KEY }}
+          applicationSecret: ${{ secrets.GEO6_APPLICATION_SECRET }}
+          consumerKey: ${{ secrets.GEO6_CONSUMER_KEY }}
