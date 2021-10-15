@@ -51,10 +51,10 @@ class Snapshot
         $this->config = Yaml::parse(file_get_contents($this->projectRoot.'config/snapshot.yml'));
 
         $this->ovh = new Api(
-            getenv('INPUT_APPLICATIONKEY') ?? $this->config['applicationKey'],
-            getenv('INPUT_APPLICATIONSECRET') ?? $this->config['applicationSecret'],
+            $this->config['applicationKey'],
+            $this->config['applicationSecret'],
             'ovh-eu',
-            getenv('INPUT_CONSUMERKEY') ?? $this->config['consumerKey']
+            $this->config['consumerKey']
         );
     }
 
