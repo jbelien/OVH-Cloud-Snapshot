@@ -1,3 +1,5 @@
+name: GEO-6
+
 on:
   workflow_call:
   # schedule:
