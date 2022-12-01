@@ -10,7 +10,7 @@
   ],
   "require": {
       "ovh/ovh": "2.0.1",
-      "symfony/yaml": "5.4.14",
+      "symfony/yaml": "5.4.16",
       "monolog/monolog": "2.8.0"
   }
 }
