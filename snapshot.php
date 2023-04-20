@@ -199,4 +199,4 @@ foreach ($config['projects'] as $p) {
     }
 }
 
-exit();
+exit;
